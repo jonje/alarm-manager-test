@@ -1,5 +1,8 @@
 package org.haknet.alarmmanagertest
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,6 +33,14 @@ import java.time.LocalDateTime
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val channel = NotificationChannel(
+            AppNotificationService.CHANNEL_ID,
+            "First_Channel",
+            NotificationManager.IMPORTANCE_DEFAULT
+        )
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
         val scheduler = AndroidAlarmScheduler(this)
         setContent {
             AlarmManagerTestTheme {
@@ -100,17 +111,4 @@ fun Greeting(scheduler: AndroidAlarmScheduler) {
             }
         }
     }
-//    Text(
-//        text = "Hello $name!",
-//        modifier = modifier
-//    )
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun GreetingPreview() {
-//    val scheduler = AndroidAlarmScheduler()
-//    AlarmManagerTestTheme {
-//        Greeting()
-//    }
-//}
